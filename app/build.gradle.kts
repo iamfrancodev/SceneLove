@@ -18,13 +18,13 @@ val localProperties = Properties().apply {
 fun escapeForBuildConfig(value: String): String = value.replace("\\", "\\\\").replace("\"", "\\\"")
 
 android {
-    namespace = "com.example.compose1"
+    namespace = "com.example.jmovie"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.example.compose1"
+        applicationId = "com.example.jmovie"
         minSdk = 28
         targetSdk = 36
         versionCode = 1

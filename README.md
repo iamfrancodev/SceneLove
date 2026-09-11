@@ -8,13 +8,13 @@ This project now includes a standard remote data architecture for TMDB API (`htt
 
 ## Package Structure
 
-- `app/src/main/java/com/example/compose1/data/remote/api` - Retrofit service interfaces
-- `app/src/main/java/com/example/compose1/data/remote/dto` - DTO models from API
-- `app/src/main/java/com/example/compose1/data/remote/interceptor` - request/auth interceptor
-- `app/src/main/java/com/example/compose1/data/repository` - Repository implementations
-- `app/src/main/java/com/example/compose1/data/di` - Hilt modules
-- `app/src/main/java/com/example/compose1/domain` - Domain models, repository contracts, use cases
-- `app/src/main/java/com/example/compose1/ui` - ViewModel and Compose screen state
+- `app/src/main/java/com/example/jmovie/data/remote/api` - Retrofit service interfaces
+- `app/src/main/java/com/example/jmovie/data/remote/dto` - DTO models from API
+- `app/src/main/java/com/example/jmovie/data/remote/interceptor` - request/auth interceptor
+- `app/src/main/java/com/example/jmovie/data/repository` - Repository implementations
+- `app/src/main/java/com/example/jmovie/data/di` - Hilt modules
+- `app/src/main/java/com/example/jmovie/domain` - Domain models, repository contracts, use cases
+- `app/src/main/java/com/example/jmovie/ui` - ViewModel and Compose screen state
 
 ## Setup
 
