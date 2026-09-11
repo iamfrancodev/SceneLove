@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Compose1.Launcher" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@android:color/transparent</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_app</item>
+        <item name="postSplashScreenTheme">@style/Theme.Compose1</item>
+    </style>
+</resources>
+

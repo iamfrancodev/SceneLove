@@ -4,26 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.compose1.ui.MainScreen
-import com.example.compose1.ui.SplashScreen
+import com.example.compose1.ui.HomeScreen
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "splash")
+    NavHost(navController = navController, startDestination = "main")
     {
-        composable("splash") {
-            SplashScreen(
-                onNavigateToMain = {
-                    navController.navigate("main") {
-                        popUpTo("splash") {
-                            inclusive = true
-                        }
-                    }
-                }
-            )
-        }
-        composable("main") { MainScreen() }
+        composable("main") { HomeScreen() }
     }
 }

@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose1.theme.JFrancoTheme
 
 @Composable
-fun MainScreen() {
+fun HomeScreen() {
     Box(modifier = Modifier.fillMaxSize()) {
         Text("Home Screen", modifier = Modifier.align(Alignment.Center))
     }
@@ -26,11 +26,11 @@ fun MainScreen() {
 )
 
 @Composable
-fun MainScreenPreview() {
+fun HomeScreenPreview() {
 
     JFrancoTheme() {
         Surface() {
-            MainScreen()
+            HomeScreen()
         }
     }
 
