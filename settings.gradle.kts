@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Compose1"
+rootProject.name = "JMovie"
 include(":app")
