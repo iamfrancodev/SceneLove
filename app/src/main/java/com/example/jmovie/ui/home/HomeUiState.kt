@@ -1,4 +1,4 @@
-package com.example.jmovie.ui
+package com.example.jmovie.ui.home
 
 import com.example.jmovie.domain.model.Movie
 

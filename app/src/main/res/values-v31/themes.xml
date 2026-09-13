@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.JMovie.Launcher" parent="Theme.SplashScreen">
+    <style name="Theme.JMovie" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.JMovie.Launcher" parent="Theme.JMovie">
         <item name="windowSplashScreenBackground">@android:color/transparent</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_app</item>
         <item name="postSplashScreenTheme">@style/Theme.JMovie</item>

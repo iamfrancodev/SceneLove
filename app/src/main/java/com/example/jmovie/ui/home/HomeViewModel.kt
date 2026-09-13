@@ -1,4 +1,4 @@
-package com.example.jmovie.ui
+package com.example.jmovie.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
