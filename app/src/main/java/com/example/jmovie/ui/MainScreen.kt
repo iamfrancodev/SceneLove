@@ -30,7 +30,7 @@ fun MainScreen() {
         topBar = {
             if (isShowTopAppBar) {
                 HomeTopAppBar(
-                    onSearchBarClick = {
+                    onSearchClick = {
                         navController.navigate(SearchRoute)
                     },
                     onNotificationClick = {
