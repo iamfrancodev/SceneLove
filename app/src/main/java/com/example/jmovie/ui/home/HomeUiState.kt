@@ -5,7 +5,8 @@ import com.example.jmovie.domain.model.Movie
 data class HomeUiState(
     val isLoading: Boolean = false,
     var movieCatalogs: List<MovieCatalog> = emptyList(),
-    val error: String? = null
+    val error: String? = null,
+    val isRefreshing: Boolean = false
 )
 
 data class MovieCatalog(
