@@ -26,6 +26,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,9 +41,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
+import coil3.size.Size
 import com.example.jmovie.domain.model.Movie
 
 @Composable
@@ -84,8 +87,7 @@ fun HomeScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(start = 12.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                    .padding(start = 12.dp)
             ) {
                 item(key = "header") {
                     HotMovieBanner(
@@ -97,7 +99,10 @@ fun HomeScreen(
                     items = uiState.movieCatalogs,
                     key = { it.id }
                 ) { movieCatalog ->
-                    MovieCatalogItem(movieCatalog = movieCatalog)
+                    if (!movieCatalog.movies.isEmpty()) {
+                        MovieCatalogItem(movieCatalog = movieCatalog)
+                        Spacer(modifier = Modifier.height(12.dp))
+                    }
                 }
                 item(key = "footer") {
                     Spacer(modifier = Modifier.height(12.dp))
@@ -133,7 +138,7 @@ fun HotMovieBanner(movies: List<Movie>) {
                     .size(8.dp)
                     .clip(CircleShape)
                     .background(
-                        color = if (pagerState.currentPage == index) Color.Green else Color.Gray
+                        color = if (pagerState.currentPage == index) Color.Black else Color.Gray
                     )
             )
         }
@@ -189,29 +194,26 @@ fun MovieItem(movie: Movie) {
             model = movie.posterUrl,
             contentDescription = movie.title,
             modifier = Modifier
-                .width(152.dp)
-                .height(152.dp)
+                .width(145.dp)
+                .height(185.dp)
                 .clip(shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)),
             contentScale = ContentScale.Crop
         )
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(IntrinsicSize.Min)
                 .clip(shape = RoundedCornerShape(bottomStart = 4.dp, bottomEnd = 4.dp))
                 .background(Color.Black)
                 .padding(4.dp),
-            contentAlignment = Alignment.Center
         ) {
-            Text(text = "\n", minLines = 2)
             Text(
                 text = movie.title,
                 modifier = Modifier.fillMaxWidth(),
-                maxLines = 2,
+                fontSize = 12.sp,
+                maxLines = 1,
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center
             )
         }
     }
