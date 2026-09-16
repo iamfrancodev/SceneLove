@@ -37,7 +37,7 @@ class HomeViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true, error = null) }
 
             try {
-                val trendingDeferred = async { getTrendingMoviesUseCase("day") }
+                val trendingDeferred = async { getTrendingMoviesUseCase(timeWindow = "day") }
                 val popularDeferred = async { getPopularMoviesUseCase() }
                 val nowPlayingDeferred = async { getNowPlayingMoviesUseCase() }
                 val topRatedDeferred = async { getTopRatedMoviesUseCase() }
@@ -74,6 +74,16 @@ class HomeViewModel @Inject constructor(
                     upcomingResult.data
                 } else {
                     emptyList()
+                }
+
+                if (trendingMovies.isEmpty() &&
+                    popularMovies.isEmpty() &&
+                    nowPlayingMovies.isEmpty() &&
+                    topRatedMovies.isEmpty() &&
+                    upcomingMovies.isEmpty()
+                ) {
+                    _uiState.update { it.copy(error = "No movies found") }
+                    return@launch
                 }
 
                 _uiState.update {

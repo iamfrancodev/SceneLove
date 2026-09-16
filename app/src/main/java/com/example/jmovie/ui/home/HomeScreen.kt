@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -26,7 +24,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,7 +34,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,7 +41,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
-import coil3.size.Size
 import com.example.jmovie.domain.model.Movie
 
 @Composable
@@ -176,7 +171,8 @@ fun MovieCatalogItem(
                 items = movieCatalog.movies,
                 key = { index, item -> item.id }
             ) { index, movie ->
-                MovieItem(movie)
+                val isUpComing = movieCatalog.title == "Upcoming"
+                MovieItem(movie, isUpComing)
                 if (index == movieCatalog.movies.size - 1) {
                     Spacer(modifier = Modifier.width(12.dp))
                 }
@@ -186,7 +182,7 @@ fun MovieCatalogItem(
 }
 
 @Composable
-fun MovieItem(movie: Movie) {
+fun MovieItem(movie: Movie, isUpComing: Boolean = false) {
     Column(
         modifier = Modifier.width(IntrinsicSize.Min)
     ) {
@@ -210,10 +206,25 @@ fun MovieItem(movie: Movie) {
                 text = movie.title,
                 modifier = Modifier.fillMaxWidth(),
                 fontSize = 12.sp,
+                lineHeight = 12.sp,
                 maxLines = 1,
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis
+            )
+            val descriptionText = if (isUpComing) {
+                "Dự kiến: ${movie.releaseDate}"
+            } else {
+                "★ ${movie.voteAverage} • ${movie.releaseDate}"
+            }
+            Text(
+                text = descriptionText,
+                fontSize = 10.sp,
+                lineHeight = 10.sp,
+                maxLines = 1,
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
@@ -228,7 +239,9 @@ fun MovieItemPreview() {
             title = "Moana",
             overview = "Teenage Moana answers the Ocean's call and, for the first time, voyages beyond the reef of her island of Motunui with infamous demigod Maui on an unforgettable journey to restore prosperity to her people.",
             posterUrl = "https://image.tmdb.org/t/p/w342/gaet1xQ2nxrG0V1Ep9T20ZMNEIC.jpg",
-            backdropUrl = ""
+            backdropUrl = "",
+            voteAverage = 7.85,
+            releaseDate = "2023-11-23"
         )
     )
 }

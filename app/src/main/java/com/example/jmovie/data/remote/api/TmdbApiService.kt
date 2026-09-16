@@ -10,31 +10,41 @@ interface TmdbApiService {
     @GET("trending/movie/{time_window}")
     suspend fun getTrendingMovies(
         @Path("time_window") timeWindow: String = "day",
+        @Query("page") page: Int = 1,
         @Query("language") language: String = "vi-VN",
+        @Query("region") region: String = "VN",
     ): MoviesResponseDto
 
     @GET("movie/popular")
     suspend fun getPopularMovies(
         @Query("page") page: Int = 1,
-        @Query("language") language: String = "vi-VN"
+        @Query("language") language: String = "vi-VN",
+        @Query("region") region: String = "VN",
     ): MoviesResponseDto
 
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovies(
         @Query("page") page: Int = 1,
-        @Query("language") language: String = "vi-VN"
+        @Query("language") language: String = "vi-VN",
+        @Query("region") region: String = "VN",
     ): MoviesResponseDto
 
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(
         @Query("page") page: Int = 1,
-        @Query("language") language: String = "vi-VN"
+        @Query("language") language: String = "vi-VN",
+        @Query("region") region: String = "VN",
     ): MoviesResponseDto
 
-    @GET("movie/upcoming")
+    @GET("discover/movie")
     suspend fun getUpcomingMovies(
         @Query("page") page: Int = 1,
-        @Query("language") language: String = "vi-VN"
+        @Query("language") language: String = "vi-VN",
+        @Query("region") region: String = "VN",
+        @Query("with_release_type") releaseType: String = "2|3",
+        @Query("release_date.gte") fromDate: String,
+        @Query("release_date.lte") toDate: String,
+        @Query("sort_by") sortBy: String = "popularity.desc",
     ): MoviesResponseDto
 }
 
