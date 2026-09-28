@@ -5,6 +5,7 @@ import com.example.jmovie.data.mapper.toDomain
 import com.example.jmovie.data.remote.api.TmdbApiService
 import com.example.jmovie.domain.common.NetworkResult
 import com.example.jmovie.domain.model.Movie
+import com.example.jmovie.domain.model.MovieDetail
 import com.example.jmovie.domain.repository.MovieRepository
 import org.intellij.lang.annotations.Language
 import javax.inject.Inject
@@ -116,6 +117,19 @@ class MovieRepositoryImpl @Inject constructor(
             val message = when (t) {
                 is HttpException -> "TMDB request failed (HTTP ${t.code()})."
                 else -> t.message ?: "Unable to load movies from TMDB"
+            }
+            NetworkResult.Error(message = message, throwable = t)
+        }
+    }
+
+    override suspend fun getMovieDetail(movieId: Int): NetworkResult<MovieDetail> {
+        return try {
+            val response = apiService.getMovieDetail(movieId = movieId)
+            NetworkResult.Success(response.toDomain())
+        } catch (t: Throwable) {
+            val message = when (t) {
+                is HttpException -> "TMDB request failed (HTTP ${t.code()})."
+                else -> t.message ?: "Unable to load movie detail from TMDB"
             }
             NetworkResult.Error(message = message, throwable = t)
         }

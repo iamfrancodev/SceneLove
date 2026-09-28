@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.jmovie.ui.movie_detail.MovieDetailScreen
 import com.example.jmovie.ui.discuss.DiscussScreen
 import com.example.jmovie.ui.home.HomeScreen
 import com.example.jmovie.ui.home.notification.NotificationScreen
@@ -123,6 +124,12 @@ fun MainNavHost(
                         EditProfileRoute
                     )
                 }
+            )
+        }
+
+        composable<MovieDetailRoute> {
+            MovieDetailScreen(
+                movieId = it.arguments?.getInt("movieId") ?: 0
             )
         }
     }

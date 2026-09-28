@@ -1,5 +1,6 @@
 package com.example.jmovie.data.remote.api
 
+import com.example.jmovie.data.remote.dto.MovieDetailResponseDto
 import com.example.jmovie.data.remote.dto.MoviesResponseDto
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -46,5 +47,11 @@ interface TmdbApiService {
         @Query("release_date.lte") toDate: String,
         @Query("sort_by") sortBy: String = "popularity.desc",
     ): MoviesResponseDto
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetail(
+        @Path("movie_id") movieId: Int = 0
+    ): MovieDetailResponseDto
+
 }
 

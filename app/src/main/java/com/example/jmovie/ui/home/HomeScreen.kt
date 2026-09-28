@@ -1,6 +1,7 @@
 package com.example.jmovie.ui.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -88,7 +89,8 @@ fun HomeScreen(
                 item(key = "header") {
                     HotMovieBanner(
                         movies = uiState.movieCatalogs.firstOrNull()?.movies?.takeLast(3)
-                            ?: emptyList()
+                            ?: emptyList(),
+                        onMovieClick = onMovieClick
                     )
                 }
                 items(
@@ -96,7 +98,7 @@ fun HomeScreen(
                     key = { it.id }
                 ) { movieCatalog ->
                     if (!movieCatalog.movies.isEmpty()) {
-                        MovieCatalogItem(movieCatalog = movieCatalog)
+                        MovieCatalogItem(movieCatalog = movieCatalog, onMovieClick = onMovieClick)
                         Spacer(modifier = Modifier.height(12.dp))
                     }
                 }
@@ -109,7 +111,7 @@ fun HomeScreen(
 }
 
 @Composable
-fun HotMovieBanner(movies: List<Movie>) {
+fun HotMovieBanner(movies: List<Movie>, onMovieClick: (Int) -> Unit) {
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { movies.size })
     HorizontalPager(
         state = pagerState,
@@ -118,7 +120,7 @@ fun HotMovieBanner(movies: List<Movie>) {
         ),
         pageSpacing = 12.dp,
     ) { page ->
-        HotMovieItem(movie = movies[page])
+        HotMovieItem(movie = movies[page], onMovieClick = onMovieClick)
     }
 
     Row(
@@ -142,13 +144,16 @@ fun HotMovieBanner(movies: List<Movie>) {
 }
 
 @Composable
-fun HotMovieItem(movie: Movie) {
+fun HotMovieItem(movie: Movie, onMovieClick: (Int) -> Unit) {
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
-            .clip(RoundedCornerShape(12.dp)),
+            .clip(RoundedCornerShape(12.dp))
+            .clickable(onClick = {
+                onMovieClick(movie.id)
+            }),
     ) {
         AsyncImage(
             model = movie.backdropUrl,
@@ -206,13 +211,15 @@ fun HotMovieItemPreview() {
             backdropUrl = "https://image.tmdb.org/t/p/w1280/gaet1xQ2nxrG0V1Ep9T20ZMNEIC.jpg",
             voteAverage = 7.85,
             releaseDate = "2023-11-23"
-        )
+        ),
+        {}
     )
 }
 
 @Composable
 fun MovieCatalogItem(
-    movieCatalog: MovieCatalog
+    movieCatalog: MovieCatalog,
+    onMovieClick: (Int) -> Unit
 ) {
     if (movieCatalog.movies.isEmpty()) return
     Column {
@@ -229,7 +236,7 @@ fun MovieCatalogItem(
                 key = { index, item -> item.id }
             ) { index, movie ->
                 val isUpComing = movieCatalog.title == "Upcoming"
-                MovieItem(movie, isUpComing)
+                MovieItem(movie, onMovieClick = onMovieClick, isUpComing)
                 if (index == movieCatalog.movies.size - 1) {
                     Spacer(modifier = Modifier.width(12.dp))
                 }
@@ -239,9 +246,9 @@ fun MovieCatalogItem(
 }
 
 @Composable
-fun MovieItem(movie: Movie, isUpComing: Boolean = false) {
+fun MovieItem(movie: Movie, onMovieClick: (Int) -> Unit, isUpComing: Boolean = false) {
     Column(
-        modifier = Modifier.width(IntrinsicSize.Min)
+        modifier = Modifier.width(IntrinsicSize.Min).clickable(onClick = { onMovieClick(movie.id) })
     ) {
         AsyncImage(
             model = movie.posterUrl,
@@ -299,6 +306,7 @@ fun MovieItemPreview() {
             backdropUrl = "",
             voteAverage = 7.85,
             releaseDate = "2023-11-23"
-        )
+        ),
+        {}
     )
 }
