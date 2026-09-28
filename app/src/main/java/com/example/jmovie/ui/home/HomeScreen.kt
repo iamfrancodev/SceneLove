@@ -31,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -142,14 +143,70 @@ fun HotMovieBanner(movies: List<Movie>) {
 
 @Composable
 fun HotMovieItem(movie: Movie) {
-    AsyncImage(
-        model = movie.backdropUrl,
-        contentDescription = movie.title,
+
+    Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
             .clip(RoundedCornerShape(12.dp)),
-        contentScale = ContentScale.Crop
+    ) {
+        AsyncImage(
+            model = movie.backdropUrl,
+            contentDescription = movie.title,
+            modifier = Modifier
+                .fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Transparent,
+                            Color.Black.copy(alpha = 0.15f),
+                            Color.Black.copy(alpha = 0.9f)
+                        )
+                    )
+                )
+        )
+
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(16.dp)
+        ) {
+            Text(
+                text = movie.title,
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp
+            )
+
+            Spacer(modifier = Modifier.height(2.dp))
+
+            Text(
+                text = "★ ${movie.voteAverage} • ${movie.releaseDate}",
+                color = Color.White.copy(alpha = 0.8f)
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun HotMovieItemPreview() {
+    HotMovieItem(
+        Movie(
+            id = 1,
+            title = "Moana",
+            overview = "Teenage Moana answers the Ocean's call and, for the first time, voyages beyond the reef of her island of Motunui with infamous demigod Maui on an unforgettable journey to restore prosperity to her people.",
+            posterUrl = "https://image.tmdb.org/t/p/w342/gaet1xQ2nxrG0V1Ep9T20ZMNEIC.jpg",
+            backdropUrl = "https://image.tmdb.org/t/p/w1280/gaet1xQ2nxrG0V1Ep9T20ZMNEIC.jpg",
+            voteAverage = 7.85,
+            releaseDate = "2023-11-23"
+        )
     )
 }
 
